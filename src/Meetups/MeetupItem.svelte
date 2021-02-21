@@ -1,4 +1,6 @@
 <script>
+    import Button from '../UI/Button.svelte';
+
     export let title;
     export let subtitle;
     export let imageUrl;
@@ -20,9 +22,9 @@
         <p>{description}</p>
     </div>
     <footer>
-        <a href="mailto:{email}">Contact</a>
-        <button>Show detail</button>
-        <button>favorite</button>
+        <Button href="mailto:{email}" caption="Contact"/>
+        <Button type="button" mode="outline" caption="Favorite"/>
+        <Button type="button" caption="Show Detail"/>
     </footer>
 </article>
 
