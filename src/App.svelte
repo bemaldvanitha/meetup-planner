@@ -57,16 +57,16 @@
 
 	<form on:submit|preventDefault={addMeetup}>
 
-		<TextInput id="title" type="text" label="Title" value="{title}"
+		<TextInput id="title" label="Title" value="{title}"
 				   on:input={(event) => {title = event.target.value}}/>
 
-		<TextInput id="subtitle" label="Sub title" type="text" value="{subtitle}"
+		<TextInput id="subtitle" label="Sub title" value="{subtitle}"
 				   on:input={(event) => {subtitle = event.target.value}}/>
 
-		<TextInput id="address" label="Address" type="text" value="{address}"
+		<TextInput id="address" label="Address" value="{address}"
 				   on:input={(event) => {address = event.target.value}}/>
 
-		<TextInput id="imageUrl" label="Image URL" type="text" value="{imageUrl}"
+		<TextInput id="imageUrl" label="Image URL" value="{imageUrl}"
 				   on:input={(event) => {imageUrl = event.target.value}}/>
 
 		<TextInput id="email" label="Email" type="email" value="{email}"
