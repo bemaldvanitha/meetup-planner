@@ -1,15 +1,10 @@
 <script>
 	import Header from './UI/Header.svelte';
 	import MeetupGrid from './Meetups/MeetupGrid.svelte';
-	import TextInput from './UI/TextInput.svelte';
+	import EditMeetup from './Meetups/EditMeetup.svelte';
 	import Button from './UI/Button.svelte';
 
-	let title = '';
-	let subtitle = '';
-	let description = '';
-	let address = '';
-	let email = '';
-	let imageUrl = '';
+	let editMode;
 
 	let meetups = [
 		{
@@ -37,19 +32,21 @@
 		}
 	];
 
-	function addMeetup(){
+	function addMeetup(event){
 
 		const newMeetup = {
 			id: Math.random().toString(),
-			title: title,
-			subtitle: subtitle,
-			address: address,
-			description: description,
-			imageUrl: imageUrl,
-			contactEmail: email
+			title: event.detail.title,
+			subtitle: event.detail.subtitle,
+			address: event.detail.address,
+			description: event.detail.description,
+			imageUrl: event.detail.imageUrl,
+			contactEmail: event.detail.email,
+			isFavorite: false,
 		}
 
 		meetups = [...meetups,newMeetup];
+		editMode = null;
 	}
 
 	function toggleFavorite(event){
@@ -69,39 +66,22 @@
 <main>
 	<Header/>
 
-	<form on:submit|preventDefault={addMeetup}>
+	<div id="meetup-controls">
+		<Button caption="New Meetup" on:click={() => editMode = 'add'}/>
+	</div>
 
-		<TextInput id="title" label="Title" value="{title}"
-				   on:input={(event) => {title = event.target.value}}/>
-
-		<TextInput id="subtitle" label="Sub title" value="{subtitle}"
-				   on:input={(event) => {subtitle = event.target.value}}/>
-
-		<TextInput id="address" label="Address" value="{address}"
-				   on:input={(event) => {address = event.target.value}}/>
-
-		<TextInput id="imageUrl" label="Image URL" value="{imageUrl}"
-				   on:input={(event) => {imageUrl = event.target.value}}/>
-
-		<TextInput id="email" label="Email" type="email" value="{email}"
-				   on:input={(event) => {email = event.target.value}}/>
-
-		<TextInput controlType="textarea" id="description" label="Description"
-				   value="{description}" on:input={(event) => {description = event.target.value}}/>
-
-		<Button type="submit" caption="Save"/>
-	</form>
-
+	{#if editMode === 'add'}
+		<EditMeetup on:save={addMeetup}/>
+	{/if}
 	<MeetupGrid meetups="{meetups}" on:togglefavorite={toggleFavorite}/>
+
 </main>
 
 <style>
 	main {
 		margin-top: 5rem;
 	}
-	form {
-		width: 30rem;
-		max-width: 90%;
-		margin: auto;
+	#meetup-controls {
+		margin: 1rem;
 	}
 </style>
