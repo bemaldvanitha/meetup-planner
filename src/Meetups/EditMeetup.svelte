@@ -35,7 +35,8 @@
     <form on:submit|preventDefault={submitForm}>
 
         <TextInput id="title" label="Title" value="{title}"
-                   on:input={(event) => {title = event.target.value}}/>
+                   on:input={(event) => {title = event.target.value}}
+                   validityMessage="Please enter valid title" valid="{false}"/>
 
         <TextInput id="subtitle" label="Sub title" value="{subtitle}"
                    on:input={(event) => {subtitle = event.target.value}}/>
