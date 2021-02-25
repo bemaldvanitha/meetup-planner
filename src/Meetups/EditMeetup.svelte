@@ -20,6 +20,7 @@
     let emailValid = false;
     let imageUrl = '';
     let imageUrlValid = false;
+    let formIsValid = false;
 
     $: titleValid = !isEmpty(title);
     $: subtitleValid = !isEmpty(subtitle);
@@ -27,6 +28,8 @@
     $: emailValid =  isEmailValid(email);
     $: addressValid = isLongerThan(address,7);
     $: imageUrlValid = isImageUrl(imageUrl);
+    $: formIsValid = titleValid && subtitleValid && descriptionValid
+        && emailValid && addressValid && imageUrlValid
 
     function submitForm(){
         dispatch('save',{
@@ -76,7 +79,7 @@
 
     <div slot="footer">
         <Button type="button" mode="outline" on:click={cancel}>Cancel</Button>
-        <Button type="button" on:click={submitForm}>Save</Button>
+        <Button type="button" on:click={submitForm} disabled="{!formIsValid}">Save</Button>
     </div>
 
 </Modal>
