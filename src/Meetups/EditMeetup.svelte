@@ -10,6 +10,8 @@
 
     const dispatch = createEventDispatcher();
 
+    export let id = null;
+
     let title = '';
     let subtitle = '';
     let description = '';
@@ -17,6 +19,20 @@
     let email = '';
     let imageUrl = '';
     let formIsValid = false;
+
+    if(id){
+        const unsubscribe = meetups.subscribe((items) => {
+            const editingMeetup = items.find(item => item.id === id);
+
+            title = editingMeetup.title;
+            subtitle = editingMeetup.subtitle;
+            description = editingMeetup.description;
+            address = editingMeetup.address;
+            email = editingMeetup.contactEmail;
+            imageUrl = editingMeetup.imageUrl;
+        });
+        unsubscribe();
+    }
 
     $: titleValid = !isEmpty(title);
     $: subtitleValid = !isEmpty(subtitle);
@@ -38,7 +54,12 @@
             contactEmail: email,
         }
 
-        meetups.addMeetup(meetupData);
+        if(id){
+            meetups.update()
+        }else{
+            meetups.addMeetup(meetupData);
+        }
+
         dispatch('save');
     }
 
