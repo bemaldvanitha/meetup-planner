@@ -9,7 +9,7 @@
         <MeetupItem id="{meetup.id}" title="{meetup.title}" subtitle="{meetup.subtitle}"
                     imageUrl="{meetup.imageUrl}" description="{meetup.description}"
                     address="{meetup.address}" email="{meetup.contactEmail}"
-                    on:togglefavorite isFav="{meetup.isFavorite}"/>
+                    isFav="{meetup.isFavorite}"/>
     {/each}
 </section>
 
