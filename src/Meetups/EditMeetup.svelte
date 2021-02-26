@@ -9,17 +9,11 @@
     const dispatch = createEventDispatcher();
 
     let title = '';
-    let titleValid = false;
     let subtitle = '';
-    let subtitleValid = false;
     let description = '';
-    let descriptionValid = false;
     let address = '';
-    let addressValid = false;
     let email = '';
-    let emailValid = false;
     let imageUrl = '';
-    let imageUrlValid = false;
     let formIsValid = false;
 
     $: titleValid = !isEmpty(title);
