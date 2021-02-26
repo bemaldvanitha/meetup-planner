@@ -55,7 +55,7 @@
         }
 
         if(id){
-            meetups.update()
+            meetups.updateMeetups(id,meetupData);
         }else{
             meetups.addMeetup(meetupData);
         }
