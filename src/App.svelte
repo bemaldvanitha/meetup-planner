@@ -6,12 +6,13 @@
 	import Header from './UI/Header.svelte';
 	import MeetupGrid from './Meetups/MeetupGrid.svelte';
 	import EditMeetup from './Meetups/EditMeetup.svelte';
-	import Button from './UI/Button.svelte';
+	import LoadingSpinner from './UI/LoadingSpinner.svelte';
 
 	let editMode;
 	let page = 'overview';
 	let pageData;
 	let editedId;
+	let isLoading = true;
 
 	onMount(() => {
 
@@ -34,9 +35,11 @@
 				});
 			}
 			meetups.setMeetups(loadedMeetups);
+			isLoading = false;
 
 		}).catch(err => {
 			console.log(err);
+			isLoading = false;
 		})
 	});
 
@@ -76,8 +79,13 @@
 			<EditMeetup on:save={saveMeetup} on:cancel={cancelEdit}
 						id="{editedId}"/>
 		{/if}
-		<MeetupGrid meetups="{$meetups}" on:showdetails={showDetails}
-					on:edit={startEdit} on:add={() => {editMode = 'edit'}}/>
+
+		{#if isLoading}
+			<LoadingSpinner/>
+		{:else}
+			<MeetupGrid meetups="{$meetups}" on:showdetails={showDetails}
+						on:edit={startEdit} on:add={() => {editMode = 'edit'}}/>
+		{/if}
 
 	{:else }
 		<MeetupDetail id="{pageData}" on:close={closeDetailPage}/>
