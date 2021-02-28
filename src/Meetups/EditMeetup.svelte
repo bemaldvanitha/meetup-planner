@@ -112,7 +112,20 @@
     }
 
     function deleteMeetup(){
-        meetups.deleteMeetup(id);
+
+        fetch('https://meetus-a9eb1-default-rtdb.firebaseio.com/meetups/${id}.json',{
+            method: 'DELETE',
+        }).then(res => {
+
+            if(!res.ok){
+                throw new Error('Delete meetup error');
+            }
+            meetups.deleteMeetup(id);
+
+        }).catch(err => {
+            console.log(err);
+        })
+
         dispatch('save');
     }
 

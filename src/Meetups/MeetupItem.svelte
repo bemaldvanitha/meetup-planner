@@ -17,7 +17,27 @@
     const dispatch = createEventDispatcher();
 
     function toggleFavorite(){
-        meetups.toggleFavorite(id);
+
+        fetch(`https://meetus-a9eb1-default-rtdb.firebaseio.com/meetups/${id}.json`,{
+
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                isFavorite: !isFav
+            })
+
+        }).then(res => {
+
+            if(!res.ok){
+                throw new Error('could not set as favorite');
+            }
+            meetups.toggleFavorite(id);
+
+        }).catch(err => {
+            console.log(err);
+        })
     }
 
 </script>
