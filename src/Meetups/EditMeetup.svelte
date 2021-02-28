@@ -55,7 +55,26 @@
         }
 
         if(id){
-            meetups.updateMeetups(id,meetupData);
+
+            fetch(`https://meetus-a9eb1-default-rtdb.firebaseio.com/meetups/${id}.json`,{
+
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(meetupData)
+
+            }).then(res => {
+
+                if(!res.ok){
+                    throw new Error('Updating error')
+                }
+                meetups.updateMeetups(id,meetupData);
+
+            }).catch(err => {
+                console.log(err);
+            })
+
         }else{
 
             fetch('https://meetus-a9eb1-default-rtdb.firebaseio.com/meetups.json',{
