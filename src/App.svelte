@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from 'svelte';
 	import meetups from "./Meetups/meetups-store";
 
 	import MeetupDetail from './Meetups/MeetupDetail.svelte';
@@ -11,6 +12,33 @@
 	let page = 'overview';
 	let pageData;
 	let editedId;
+
+	onMount(() => {
+
+		fetch('https://meetus-a9eb1-default-rtdb.firebaseio.com/meetups.json',{
+			method: 'GET',
+		}).then(res => {
+
+			if(!res.ok){
+				throw new Error('Fetching meetup fail');
+			}
+			return res.json();
+
+		}).then(data => {
+
+			const loadedMeetups = [];
+			for(const key in data){
+				loadedMeetups.push({
+					...data[key],
+					id: key
+				});
+			}
+			meetups.setMeetups(loadedMeetups);
+
+		}).catch(err => {
+			console.log(err);
+		})
+	});
 
 	function saveMeetup(){
 		editMode = null;
