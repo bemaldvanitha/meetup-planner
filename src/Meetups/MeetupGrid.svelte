@@ -1,6 +1,11 @@
 <script>
+    import { createEventDispatcher } from 'svelte';
+
     import MeetupItem from './MeetupItem.svelte';
     import MeetupFilter from './MeetupFilter.svelte';
+    import Button from '../UI/Button.svelte';
+
+    const dispatch = createEventDispatcher();
 
     export let meetups;
     let favOnly = false;
@@ -17,11 +22,14 @@
 
 </script>
 
-<section id="meetup-control">
-    <MeetupFilter on:select={setFilter}/>
+<section>
+
+    <section id="meetup-control">
+        <MeetupFilter on:select={setFilter}/>
+        <Button on:click={() => dispatch('add')}>New Meetup</Button>
+    </section>
 
     <section id="meetups">
-
         {#each filteredMeetups as meetup}
             <MeetupItem id="{meetup.id}" title="{meetup.title}" subtitle="{meetup.subtitle}"
                         imageUrl="{meetup.imageUrl}" description="{meetup.description}"
@@ -29,7 +37,8 @@
                         isFav="{meetup.isFavorite}" on:showdetails on:edit/>
         {/each}
     </section>
-</section>
+
+ </section>
 
 <style>
     #meetups {
@@ -45,7 +54,9 @@
         }
     }
 
-    #meetup-controls {
+    #meetup-control {
         margin: 1rem;
+        display: flex;
+        justify-content: space-between;
     }
 </style>
