@@ -11,7 +11,7 @@
     export let imageUrl;
     export let description;
     export let address;
-    export let email;
+    //export let email;
     export let isFav;
 
     const dispatch = createEventDispatcher();
@@ -44,7 +44,7 @@
 
 <article>
     <header>
-        <h1>
+        <h1 class:is-favorite="{isFav}">
             {title}
             {#if isFav}
                 <Badge>FAVORITE</Badge>
